@@ -1,19 +1,25 @@
 package com.api.university.controller.login;
 
-import com.api.university.entity.User;
-import com.api.university.entity.UserEntity;
+import com.api.university.entity.UniversityEntity;
+import com.api.university.model.ForgotPasswordResponse;
 import com.api.university.model.LoginModel;
-import com.api.university.repository.UsersRepository;
-import com.api.university.service.UserService;
+import com.api.university.model.ResetPassword;
+import com.api.university.repository.UniversityRepository;
+import com.api.university.service.EmailService;
+import com.api.university.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.ws.rs.QueryParam;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -22,10 +28,10 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    UsersRepository usersRepository;
+    UniversityRepository usersRepository;
 
     @Autowired
-    UserService userService;
+    EmailService emailService;
 
     @PostMapping("/authenticate")
     @ResponseBody
@@ -35,9 +41,9 @@ public class LoginController {
             log.info("loginModel={}",loginModel.getPassword());
             String password = loginModel.getPassword();
             String username = loginModel.getUsername();
-            User userEntity = usersRepository.getUserDetails(username);
+            List<UniversityEntity> userEntity = usersRepository.authenticate(username);
             log.info("Username:={} Password:={}",username, password);
-            if(userEntity.getUsername().equals(username) && userEntity.getPassword().equals(password)){
+            if(userEntity.get(0).getUsername().equals(username) && userEntity.get(0).getPassword().equals(password)){
                 status = "OK";
             }else {
                 status = "NOT OK";
@@ -49,38 +55,70 @@ public class LoginController {
         return ResponseEntity.ok(status);
     }
 
-    @RequestMapping("/home")
-    public String homePage(){
-        return "login";
+    @PostMapping("/forgotPassword")
+    @ResponseBody
+    public ResponseEntity forgotPassword(@RequestParam("email") String username, HttpServletRequest httpServletRequest){
+        String status = "";
+        ForgotPasswordResponse forgotPasswordResponse = new ForgotPasswordResponse();
+        String host = httpServletRequest.getHeader(HttpHeaders.HOST);
+        try{
+            log.info("forgotPassword:username={}",username);
+            List<UniversityEntity> userEntity = usersRepository.authenticate(username);
+            log.info("forgotPassword:Username:={} host={}", username, host);
+            if(!userEntity.isEmpty() && userEntity.get(0).getUsername().equals(username)){
+                forgotPasswordResponse.setMessage(Constants.MSG_FORGOT_PASSWORD_SUCCESS);
+                forgotPasswordResponse.setUserExists(true);
+                String encodedString = Base64.getEncoder().encodeToString(username.getBytes());
+                forgotPasswordResponse.setResetLink("http://"+host+"/api/resetPassword?data="+encodedString);
+                emailService.sendHtmlEmail(username, forgotPasswordResponse.getResetLink());
+            }else {
+                forgotPasswordResponse.setMessage(Constants.MSG_FORGOT_PASSWORD_FAILED);
+                forgotPasswordResponse.setUserExists(false);
+            }
+            log.info("forgotPassword:forgotPasswordResponse={}",forgotPasswordResponse);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.debug("forgotPassword:Xception={}",e);
+        }
+        return ResponseEntity.ok(forgotPasswordResponse);
     }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login(){
-        return "login";
+    @GetMapping("/resetPassword")
+    public String resetPassword(@RequestParam("data") String data, Model model){
+        try{
+            byte[] decodedBytes = Base64.getDecoder().decode(data);
+            String decodedEmail = new String(decodedBytes);
+            log.info("resetPassword:email={}",decodedEmail);
+            List<UniversityEntity> userEntity = usersRepository.authenticate(decodedEmail);
+            ResetPassword resetPassword = new ResetPassword();
+            resetPassword.setEmail(decodedEmail);
+            model.addAttribute("user", resetPassword);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.debug("resetPassword:Xception={}",e);
+        }
+        return "resetpassword";
     }
 
-    @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
-    public String register(Model model){
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String registerUser(Model model, @Valid User user, BindingResult bindingResult){
+    @RequestMapping(value = {"/resetPassword"}, method = RequestMethod.POST)
+    public String resetPassword(Model model, ResetPassword user, BindingResult bindingResult){
         log.info("{}",model);
         log.info("User={}",user);
+        user.setEmail(user.getEmail());
+        model.addAttribute("user", user);
         if(bindingResult.hasErrors()){
             model.addAttribute("successMessage", "User registered successfully!");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
         }
-        List<Object> userPresentObj = userService.isUserPresent(user);
-        if((Boolean) userPresentObj.get(0)){
-            model.addAttribute("successMessage", userPresentObj.get(1));
-            return "register";
-        }
-        userService.saveUser(user);
-        model.addAttribute("successMessage", "User registered successfully!");
-        return "login";
+//        List<Object> userPresentObj = userService.isUserPresent(user);
+//        if((Boolean) userPresentObj.get(0)){
+//            model.addAttribute("successMessage", userPresentObj.get(1));
+//            return "register";
+//        }
+//        userService.saveUser(user);
+        model.addAttribute("successMessage", "Password rest successful!");
+        return "resetpassword";
     }
 }
+

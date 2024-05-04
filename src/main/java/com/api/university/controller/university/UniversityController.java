@@ -4,27 +4,20 @@ import com.api.university.entity.UniversityEntity;
 import com.api.university.model.UniversityModel;
 import com.api.university.model.UniversityResponseModel;
 import com.api.university.repository.UniversityRepository;
-import com.api.university.service.UniversityService;
 import com.api.university.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api")
@@ -68,8 +61,21 @@ public class UniversityController {
         return ResponseEntity.ok(universityResponseModel);
     }
 
-    @GetMapping("/universityDetails")
-    public String universityDetails(HttpSession httpSession, ModelMap modelMap, RedirectAttributes redir) {
-        return "university";
+    @PostMapping("/getUniversitiesByRepName")
+    public ResponseEntity getUniversitiesByRepName(@RequestParam("repname") String repName){
+        List<UniversityEntity> allUniversities = universityService.getUniversitiesByRepName(repName);
+        UniversityResponseModel universityResponseModel = new UniversityResponseModel();
+        universityResponseModel.setUniversities(allUniversities);
+        Map arrayList = new HashMap();
+        allUniversities.forEach((entity)->{
+            arrayList.put(entity.getRepname(), entity.getRepname());
+        });
+        log.info("reps={}",arrayList);
+        //List<String> representatives = universityService.getAllUniversities().stream().map(UniversityEntity :: getRepname).collect(Collectors.toList());
+        universityResponseModel.setRepresentatives(arrayList);
+        log.info("universityResponseModel={}",universityResponseModel);
+        return ResponseEntity.ok(universityResponseModel);
     }
+
+
 }

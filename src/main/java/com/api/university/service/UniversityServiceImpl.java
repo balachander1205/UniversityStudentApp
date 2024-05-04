@@ -24,4 +24,14 @@ public class UniversityServiceImpl implements UniversityService {
         universityRepository.insertUniversity(universityname, description, location,
                 repname, position, admissionintake, username, password);
     }
+
+    @Override
+    public List<UniversityEntity> getUniversitiesByRepName(String userrname) {
+        return universityRepository.getUniversitiesByRepName(userrname);
+    }
+
+    @Override
+    public List<UniversityEntity> authenticate(String userrname) {
+        return universityRepository.authenticate(userrname);
+    }
 }

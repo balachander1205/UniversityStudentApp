@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @EnableJpaRepositories
 @ComponentScan(basePackages = { "com.api.university" })
-public class UniversityWebAppApplication {
+public class UniversityStudentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UniversityWebAppApplication.class, args);
+		SpringApplication.run(UniversityStudentApplication.class, args);
 	}
 }
