@@ -1,6 +1,7 @@
 package com.api.university.service;
 
 import com.api.university.entity.UniversityEntity;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface UniversityService {
                                  String username, String password);
     public List<UniversityEntity> getUniversitiesByRepName(String userrname);
     List<UniversityEntity> authenticate(String userrname);
+    public void resetPassword(String username, String password);
 }

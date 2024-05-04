@@ -101,23 +101,22 @@ public class LoginController {
     }
 
     @RequestMapping(value = {"/resetPassword"}, method = RequestMethod.POST)
-    public String resetPassword(Model model, ResetPassword user, BindingResult bindingResult){
+    public String resetPassword(Model model,@Valid ResetPassword user, BindingResult bindingResult){
         log.info("{}",model);
-        log.info("User={}",user);
+        log.info("User={}",model.getAttribute("email"));
         user.setEmail(user.getEmail());
         model.addAttribute("user", user);
+        List<UniversityEntity> userEntity = usersRepository.authenticate(user.getEmail());
+        log.info("resetPassword:userEntity={}",userEntity);
+        if(userEntity.size()>0){
+            usersRepository.resetPassword(user.getEmail(), user.getNewPassword());
+            model.addAttribute("successMessage", "Password rest successful.");
+        }
         if(bindingResult.hasErrors()){
-            model.addAttribute("successMessage", "User registered successfully!");
+            model.addAttribute("successMessage", "Password reset failed.");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
         }
-//        List<Object> userPresentObj = userService.isUserPresent(user);
-//        if((Boolean) userPresentObj.get(0)){
-//            model.addAttribute("successMessage", userPresentObj.get(1));
-//            return "register";
-//        }
-//        userService.saveUser(user);
-        model.addAttribute("successMessage", "Password rest successful!");
         return "resetpassword";
     }
 }

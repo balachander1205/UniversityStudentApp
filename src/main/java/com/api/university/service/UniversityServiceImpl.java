@@ -34,4 +34,8 @@ public class UniversityServiceImpl implements UniversityService {
     public List<UniversityEntity> authenticate(String userrname) {
         return universityRepository.authenticate(userrname);
     }
+
+    public void resetPassword(String username, String password){
+        universityRepository.resetPassword(username, password);
+    };
 }
