@@ -17,7 +17,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
 
     @Transactional
     @Modifying
-    @Query(value = "insert into db_university.appointments (id, studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime) " +
+    @Query(value = "insert into appointments (id, studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime) " +
             "values (0, :studentname, :repname, :universityname, :location, :appointmentdate, :appointmentslot, :createdatetime)", nativeQuery = true)
     public void createAppointment(@Param("studentname") String studentname, @Param("repname") String repname, @Param("universityname") String universityname, @Param("location") String location,
                               @Param("appointmentdate") String appointmentdate, @Param("appointmentslot") String appointmentslot, @Param("createdatetime") Timestamp createdatetime);
