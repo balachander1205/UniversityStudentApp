@@ -24,7 +24,7 @@ public interface UniversityRepository extends CrudRepository<UniversityEntity, L
 
     @Transactional
     @Modifying
-    @Query(value = "insert into db_university.university (universityname, description, location, repname, position, admissionintake, username, password) " +
+    @Query(value = "insert into university (universityname, description, location, repname, position, admissionintake, username, password) " +
             "values (:universityname, :description, :location, :repname, :position, :admissionintake, :username, :password)" , nativeQuery = true)
     public void insertUniversity(@Param("universityname") String universityname, @Param("description") String description, @Param("location") String location,
                                  @Param("repname") String repname, @Param("position") String position, @Param("admissionintake") String admissionintake,
