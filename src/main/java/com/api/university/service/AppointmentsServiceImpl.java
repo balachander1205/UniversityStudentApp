@@ -28,4 +28,9 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     public List<AppointmentsEntity> getAppointmentsByRepname(String repname) {
         return appointmentsRepository.getAppointmentsByRepname(repname);
     }
+
+    @Override
+    public List<AppointmentsEntity> getUpcomingAppointments() {
+        return appointmentsRepository.getUpcomingAppointments();
+    }
 }

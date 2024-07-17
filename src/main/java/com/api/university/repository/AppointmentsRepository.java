@@ -27,4 +27,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
 
     @Query(value = "select data from AppointmentsEntity data where data.repname=:repname")
     public List<AppointmentsEntity> getAppointmentsByRepname(@Param("repname") String repname);
+
+    @Query(value = "select data from AppointmentsEntity data where data.appointmentdate>=NOW()")
+    public List<AppointmentsEntity> getUpcomingAppointments();
 }

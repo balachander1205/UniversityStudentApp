@@ -14,4 +14,5 @@ public interface AppointmentsService {
     public List<AppointmentsEntity> getAllAppointments();
 
     public List<AppointmentsEntity> getAppointmentsByRepname(String repname);
+    public List<AppointmentsEntity> getUpcomingAppointments();
 }

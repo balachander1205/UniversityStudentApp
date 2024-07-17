@@ -13,4 +13,5 @@ public interface UniversityService {
     public List<UniversityEntity> getUniversitiesByRepName(String userrname);
     List<UniversityEntity> authenticate(String userrname);
     public void resetPassword(String username, String password);
+    public List<UniversityEntity> getUniversitiesByID(int id);
 }

@@ -37,5 +37,12 @@ public class UniversityServiceImpl implements UniversityService {
 
     public void resetPassword(String username, String password){
         universityRepository.resetPassword(username, password);
-    };
+    }
+
+    @Override
+    public List<UniversityEntity> getUniversitiesByID(int id) {
+        return universityRepository.getUniversitiesByID(id);
+    }
+
+    ;
 }

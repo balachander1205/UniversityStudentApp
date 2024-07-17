@@ -34,6 +34,11 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentsRepository.getAllAppointments());
     }
 
+    @PostMapping("/getUpcomingAppointments")
+    public ResponseEntity getUpcomingAppointments(){
+        return ResponseEntity.ok(appointmentsRepository.getUpcomingAppointments());
+    }
+
     @PostMapping("/getAppointmentsByRepname")
     public ResponseEntity getAppointmentsByRepname(@RequestParam("repname") String repname){
         List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsByRepname(repname);

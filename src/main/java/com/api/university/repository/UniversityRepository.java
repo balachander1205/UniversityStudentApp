@@ -19,6 +19,9 @@ public interface UniversityRepository extends CrudRepository<UniversityEntity, L
     @Query("select data from UniversityEntity data where data.repname=:repname")
     public List<UniversityEntity> getUniversitiesByRepName(@Param("repname") String userrname);
 
+    @Query("select data from UniversityEntity data where data.id=:id")
+    public List<UniversityEntity> getUniversitiesByID(@Param("id") int id);
+
     @Query(value = "select data from UniversityEntity data where data.username=:username")
     public List<UniversityEntity> authenticate(@Param("username") String username);
 

@@ -1,19 +1,20 @@
 package com.api.university.controller.university;
 
 import com.api.university.entity.UniversityEntity;
+import com.api.university.model.RepresentativesResponseModel;
 import com.api.university.model.UniversityModel;
 import com.api.university.model.UniversityResponseModel;
 import com.api.university.repository.UniversityRepository;
 import com.api.university.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -77,5 +78,38 @@ public class UniversityController {
         return ResponseEntity.ok(universityResponseModel);
     }
 
+    @PostMapping(value = "/getUniversitiesByID", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getUniversitiesByID(@RequestParam("id") String id){
+        List<UniversityEntity> allUniversities = universityService.getUniversitiesByID(Integer.valueOf(id));
+
+        JSONArray universities = new JSONArray();
+        for(UniversityEntity university : allUniversities){
+            JSONObject rep = new JSONObject();
+            rep.put("repName", university.getRepname());
+            rep.put("id", university.getId());
+            rep.put("description", university.getDescription());
+            rep.put("location", university.getLocation());
+            rep.put("position", university.getPosition());
+            rep.put("universityName", university.getUniversityname());
+            rep.put("admissionIntake", university.getAdmissionintake());
+            universities.put(rep);
+        }
+        return universities.toString();
+    }
+
+    @PostMapping(value = "/getRepresentatives", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getRepresentatives(){
+        List<UniversityEntity> allUniversities = universityService.getAllUniversities();
+        JSONArray allReps = new JSONArray();
+        for(UniversityEntity university : allUniversities){
+            JSONObject rep = new JSONObject();
+            rep.put("repname", university.getRepname());
+            allReps.put(rep);
+        }
+        log.info("reps={}",allReps);
+        return allReps.toString();
+    }
 
 }
