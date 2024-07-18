@@ -123,22 +123,23 @@ CREATE TABLE `university` (
   `position` varchar(500) DEFAULT NULL,
   `admissionintake` varchar(500) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL
+  `password` varchar(50) DEFAULT NULL,
+  `images` varchar(2000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `university`
 --
 
-INSERT INTO `university` (`id`, `universityname`, `description`, `location`, `repname`, `position`, `admissionintake`, `username`, `password`) VALUES
-(10, 'London University', 'London University', 'London', 'Shyam', 'Shyam', '2024-10-10', 'bala1205', 'Welcome@123'),
-(15, 'London University', 'London University', 'London', 'Shyam', 'Shyam', '2024-10-10', 'bala1205', 'Welcome@123'),
-(16, 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Spring,Fall', 'asasd', 'asasd'),
-(17, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'anudeep', 'anudeep', 'Summer,Spring,Fall', 'anudeep', 'anudeep'),
-(18, 'University of London', '', '', 'anudeep', 'anudeep', 'Summer', 'anudeeo', 'anudeeo'),
-(19, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Spring,Fall', 'anudeeo', 'anudeeo'),
-(20, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer', 'sefdsd', 'sefdsd'),
-(21, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Fall', 'bala@gmail.com', 'bala@gmail.com');
+INSERT INTO `university` (`id`, `universityname`, `description`, `location`, `repname`, `position`, `admissionintake`, `username`, `password`.`images`) VALUES
+(10, 'London University', 'London University', 'London', 'Shyam', 'Shyam', '2024-10-10', 'bala1205', 'Welcome@123',''),
+(15, 'London University', 'London University', 'London', 'Shyam', 'Shyam', '2024-10-10', 'bala1205', 'Welcome@123',''),
+(16, 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Spring,Fall', 'asasd', 'asasd',''),
+(17, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'anudeep', 'anudeep', 'Summer,Spring,Fall', 'anudeep', 'anudeep',''),
+(18, 'University of London', '', '', 'anudeep', 'anudeep', 'Summer', 'anudeeo', 'anudeeo',''),
+(19, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Spring,Fall', 'anudeeo', 'anudeeo',''),
+(20, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer', 'sefdsd', 'sefdsd',''),
+(21, 'University of London', 'The University of London is a federal public research university located in London, England, United Kingdom', 'The University of London is a federal public research university located in London, England, United Kingdom', 'Shyam', 'Shyam', 'Summer,Fall', 'bala@gmail.com', 'bala@gmail.com','');
 
 -- --------------------------------------------------------
 
