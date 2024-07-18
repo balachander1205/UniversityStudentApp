@@ -16,5 +16,6 @@ public class UniversityModel {
     private String admissionintake;
     private String username;
     private String password;
+    private String state;
     private List<String> images;
 }

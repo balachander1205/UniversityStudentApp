@@ -131,7 +131,7 @@ public class UniversityController {
 
             universityService.insertUniversity(universityModel.getUniversityname(), universityModel.getDescription(),
                     universityModel.getLocation(), universityModel.getRepname(), universityModel.getRepname(),
-                    universityModel.getAdmissionintake(), universityModel.getUsername(), universityModel.getPassword(),allImages);
+                    universityModel.getAdmissionintake(), universityModel.getUsername(), universityModel.getPassword(), universityModel.getState(), allImages);
 
             List<UniversityEntity> allUniversities = universityService.getAllUniversities();
             String homeURL = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();

@@ -28,10 +28,10 @@ public interface UniversityRepository extends CrudRepository<UniversityEntity, L
     @Transactional
     @Modifying
     @Query(value = "insert into university (universityname, description, location, repname, position, admissionintake, username, password, images) " +
-            "values (:universityname, :description, :location, :repname, :position, :admissionintake, :username, :password, :images)" , nativeQuery = true)
+            "values (:universityname, :description, :location, :repname, :position, :admissionintake, :username, :password,:state, :images)" , nativeQuery = true)
     public void insertUniversity(@Param("universityname") String universityname, @Param("description") String description, @Param("location") String location,
                                  @Param("repname") String repname, @Param("position") String position, @Param("admissionintake") String admissionintake,
-                                 @Param("username") String username, @Param("password") String password, @Param("images") String images);
+                                 @Param("username") String username, @Param("password") String password, @Param("state") String state, @Param("images") String images);
 
     @Transactional
     @Modifying
