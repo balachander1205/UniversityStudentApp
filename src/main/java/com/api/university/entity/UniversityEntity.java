@@ -39,4 +39,7 @@ public class UniversityEntity
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "images")
+    private String images;
 }

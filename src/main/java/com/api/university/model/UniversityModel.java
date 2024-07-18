@@ -3,6 +3,8 @@ package com.api.university.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UniversityModel {
@@ -14,4 +16,5 @@ public class UniversityModel {
     private String admissionintake;
     private String username;
     private String password;
+    private List<String> images;
 }
