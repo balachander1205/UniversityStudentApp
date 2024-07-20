@@ -61,11 +61,13 @@ public class UniversityController {
                 if (data.getImages() != null && data.getImages().length() > 0 && data.getImages().contains(",")) {
                     String[] images = data.getImages().split(",");
                     Arrays.stream(images).forEach(img -> {
-                        String actualImage = homeURL + "/api/images/" + img;
+                        //String actualImage = homeURL + "/api/images/" + img;
+                        String actualImage = img;
                         imagesList.add(actualImage);
                     });
                 } else {
-                    String actualImage = homeURL + "/api/images/" + data.getImages();
+                    //String actualImage = homeURL + "/api/images/" + data.getImages();
+                    String actualImage = data.getImages();
                     imagesList.add(actualImage);
                 }
                 data.setImages(StringUtils.join(imagesList, ','));
@@ -143,11 +145,13 @@ public class UniversityController {
                     if (data.getImages() != null && data.getImages().length() > 0 && data.getImages().contains(",")) {
                         String[] images = data.getImages().split(",");
                         Arrays.stream(images).forEach(img -> {
-                            String actualImage = homeURL + "/api/images/" + img;
+                            //String actualImage = homeURL + "/api/images/" + img;
+                            String actualImage = img;
                             imagesList.add(actualImage);
                         });
                     } else {
-                        String actualImage = homeURL + "/api/images/" + data.getImages();
+                        //String actualImage = homeURL + "/api/images/" + data.getImages();
+                        String actualImage = data.getImages();
                         imagesList.add(actualImage);
                     }
                     data.setImages(StringUtils.join(imagesList, ','));
@@ -193,6 +197,7 @@ public class UniversityController {
             rep.put("position", university.getPosition());
             rep.put("universityName", university.getUniversityname());
             rep.put("admissionIntake", university.getAdmissionintake());
+            rep.put("images",university.getImages());
             universities.put(rep);
         }
         return universities.toString();
@@ -206,6 +211,7 @@ public class UniversityController {
         for(UniversityEntity university : allUniversities){
             JSONObject rep = new JSONObject();
             rep.put("repname", university.getRepname());
+            rep.put("image", "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg");
             allReps.put(rep);
         }
         log.info("reps={}",allReps);
