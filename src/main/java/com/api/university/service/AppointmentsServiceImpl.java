@@ -3,6 +3,7 @@ package com.api.university.service;
 import com.api.university.entity.AppointmentsEntity;
 import com.api.university.repository.AppointmentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -15,8 +16,10 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     AppointmentsRepository appointmentsRepository;
 
     @Override
-    public void createAppointment(String studentname, String repname, String universityname, String location, String appointmentdate, String appointmentslot, Timestamp createdatetime) {
-        appointmentsRepository.createAppointment(studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime);
+    public void createAppointment(String studentname, String repname, String universityname, String location,
+                                  String appointmentdate, String appointmentslot, Timestamp createdatetime, String phoneNumber) {
+        appointmentsRepository.createAppointment(studentname, repname, universityname, location, appointmentdate,
+                appointmentslot, createdatetime, phoneNumber);
     }
 
     @Override
@@ -32,5 +35,14 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     @Override
     public List<AppointmentsEntity> getUpcomingAppointments() {
         return appointmentsRepository.getUpcomingAppointments();
+    }
+
+    @Override
+    public List<AppointmentsEntity> getAppointmentsByID(String id) {
+        return appointmentsRepository.getAppointmentsByID(id);
+    }
+
+    public List<AppointmentsEntity> getAppointmentsWithMobileNumber(String phoneNumber){
+        return appointmentsRepository.getAppointmentsWithMobileNumber(phoneNumber);
     }
 }

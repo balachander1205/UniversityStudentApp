@@ -17,10 +17,11 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
 
     @Transactional
     @Modifying
-    @Query(value = "insert into appointments (studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime) " +
-            "values (:studentname, :repname, :universityname, :location, :appointmentdate, :appointmentslot, :createdatetime)", nativeQuery = true)
+    @Query(value = "insert into appointments (studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime, phonenumber) " +
+            "values (:studentname, :repname, :universityname, :location, :appointmentdate, :appointmentslot, :createdatetime, :phoneNumber)", nativeQuery = true)
     public void createAppointment(@Param("studentname") String studentname, @Param("repname") String repname, @Param("universityname") String universityname, @Param("location") String location,
-                              @Param("appointmentdate") String appointmentdate, @Param("appointmentslot") String appointmentslot, @Param("createdatetime") Timestamp createdatetime);
+                              @Param("appointmentdate") String appointmentdate, @Param("appointmentslot") String appointmentslot, @Param("createdatetime") Timestamp createdatetime,
+                                  @Param("phoneNumber") String phoneNumber);
 
     @Query(value = "select data from AppointmentsEntity data")
     public List<AppointmentsEntity> getAllAppointments();
@@ -30,4 +31,11 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
 
     @Query(value = "select data from AppointmentsEntity data where data.appointmentdate>=NOW()")
     public List<AppointmentsEntity> getUpcomingAppointments();
+
+    @Query(value = "select data from AppointmentsEntity data where data.id=:id")
+    public List<AppointmentsEntity> getAppointmentsByID(@Param("id") String id);
+
+    // getAppointmentsWithMobileNumber
+    @Query(value = "select data from AppointmentsEntity data where data.phonenumber=:phoneNumber")
+    public List<AppointmentsEntity> getAppointmentsWithMobileNumber(@Param("phoneNumber") String phoneNumber);
 }

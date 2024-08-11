@@ -2,6 +2,7 @@ package com.api.university.service;
 
 import com.api.university.entity.StudentEntity;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,4 +14,6 @@ public interface StudentService {
     public List<StudentEntity> getAllStudents();
     public List<StudentEntity> getTotalStudents();
     public List<StudentEntity> getActiveStudents();
+    public List<StudentEntity> getStudentDetailsByMobileNumber(String phonenumber);
+    public int updateFeedback(long id, String feedback);
 }

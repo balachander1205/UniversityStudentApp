@@ -3,6 +3,7 @@ package com.api.university.service;
 import com.api.university.entity.StudentEntity;
 import com.api.university.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -29,5 +30,14 @@ public class StudentServiceImpl implements StudentService {
     }
     public List<StudentEntity> getActiveStudents(){
         return studentRepository.getActiveStudents();
+    }
+
+    public List<StudentEntity> getStudentDetailsByMobileNumber(String phonenumber){
+        return studentRepository.getStudentDetailsByMobileNumber(phonenumber);
+    }
+
+    @Override
+    public int updateFeedback(long id, String feedback) {
+        return studentRepository.updateFeedback(id, feedback);
     }
 }

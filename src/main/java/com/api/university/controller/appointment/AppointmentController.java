@@ -25,7 +25,8 @@ public class AppointmentController {
     public ResponseEntity bookAppointment(@RequestBody AppointmentModel appointmentModel){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         appointmentsRepository.createAppointment(appointmentModel.getStudentName(), appointmentModel.getRepName(),
-                appointmentModel.getUniversityName(), appointmentModel.getLocation(), appointmentModel.getAppointmentDate(), appointmentModel.getAppointmentSlot(), timestamp);
+                appointmentModel.getUniversityName(), appointmentModel.getLocation(), appointmentModel.getAppointmentDate(), appointmentModel.getAppointmentSlot(), timestamp,
+                appointmentModel.getPhoneNumber());
         return ResponseEntity.ok(appointmentsRepository.getAllAppointments());
     }
 
@@ -42,6 +43,24 @@ public class AppointmentController {
     @PostMapping("/getAppointmentsByRepname")
     public ResponseEntity getAppointmentsByRepname(@RequestParam("repname") String repname){
         List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsByRepname(repname);
+        return ResponseEntity.ok(listOfAppointments);
+    }
+
+    @PostMapping("/getAppointmentsByID")
+    public ResponseEntity getAppointmentsByID(@RequestParam("id") String id){
+        List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsByID(id);
+        return ResponseEntity.ok(listOfAppointments);
+    }
+
+    @PostMapping("/getAppointmentDetailsByID")
+    public ResponseEntity getAppointmentDetailsByID(@RequestParam("id") String id){
+        List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsByID(id);
+        return ResponseEntity.ok(listOfAppointments);
+    }
+
+    @PostMapping("/getAppointmentsWithMobileNumber")
+    public ResponseEntity getAppointmentsWithMobileNumber(@RequestParam("phoneNumber") String phoneNumber){
+        List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsWithMobileNumber(phoneNumber);
         return ResponseEntity.ok(listOfAppointments);
     }
 }

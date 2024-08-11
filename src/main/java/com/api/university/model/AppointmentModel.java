@@ -12,4 +12,5 @@ public class AppointmentModel {
     private String location;
     private String appointmentDate;
     private String appointmentSlot;
+    private String phoneNumber;
 }
