@@ -145,13 +145,13 @@ public class UniversityController {
                     if (data.getImages() != null && data.getImages().length() > 0 && data.getImages().contains(",")) {
                         String[] images = data.getImages().split(",");
                         Arrays.stream(images).forEach(img -> {
-                            //String actualImage = homeURL + "/api/images/" + img;
-                            String actualImage = img;
+                            String actualImage = homeURL + "/api/images/" + img;
+//                            String actualImage = img;
                             imagesList.add(actualImage);
                         });
                     } else {
-                        //String actualImage = homeURL + "/api/images/" + data.getImages();
-                        String actualImage = data.getImages();
+                        String actualImage = homeURL + "/api/images/" + data.getImages();
+//                        String actualImage = data.getImages();
                         imagesList.add(actualImage);
                     }
                     data.setImages(StringUtils.join(imagesList, ','));
