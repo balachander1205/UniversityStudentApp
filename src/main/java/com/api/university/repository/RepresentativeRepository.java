@@ -15,4 +15,7 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
 
     @Query(value = "select a from RepresentativeEntity r, AppointmentsEntity a where r.email=:email and r.repname = a.repname")
     public List<AppointmentsEntity> getRepresentativeAppointmentsByEmailID(@Param("email") String email);
+
+    @Query(value = "select r from RepresentativeEntity r")
+    public List<RepresentativeEntity> getAllRepresentatives();
 }

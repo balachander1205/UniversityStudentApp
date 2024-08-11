@@ -1,6 +1,7 @@
 package com.api.university.controller.representative;
 
 import com.api.university.entity.AppointmentsEntity;
+import com.api.university.entity.RepresentativeEntity;
 import com.api.university.service.RepresentativeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,12 @@ public class RepresentativeController {
     @PostMapping("/getRepresentativeAppointmentsByEmailID")
     public ResponseEntity getRepresentativeAppointmentsByEmailID(@RequestParam("email") String email){
         List<AppointmentsEntity> data = representativeService.getRepresentativeAppointmentsByEmailID(email);
+        return ResponseEntity.ok(data);
+    }
+
+    @PostMapping("/getAllRepresentatives")
+    public ResponseEntity getAllRepresentatives(){
+        List<RepresentativeEntity> data = representativeService.getAllRepresentatives();
         return ResponseEntity.ok(data);
     }
 
