@@ -5,6 +5,7 @@ import com.api.university.model.RepresentativesResponseModel;
 import com.api.university.model.UniversityModel;
 import com.api.university.model.UniversityResponseModel;
 import com.api.university.repository.UniversityRepository;
+import com.api.university.service.RepresentativeService;
 import com.api.university.utils.CommonUtils;
 import com.api.university.utils.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +43,9 @@ public class UniversityController {
 
     @Autowired
     UniversityRepository universityService;
+
+    @Autowired
+    RepresentativeService representativeService;
 
     @Value("${spring.file.upload.location}")
     public String fileUploadLocation;
@@ -129,11 +133,14 @@ public class UniversityController {
             ObjectMapper objectMapper = new ObjectMapper();
             universityModel = objectMapper.readValue(university, UniversityModel.class);
             log.info("universityModel={}", universityModel);
-
-
+            // Add university
             universityService.insertUniversity(universityModel.getUniversityname(), universityModel.getDescription(),
                     universityModel.getLocation(), universityModel.getRepname(), universityModel.getRepname(),
-                    universityModel.getAdmissionintake(), universityModel.getUsername(), universityModel.getPassword(), universityModel.getState(), allImages);
+                    universityModel.getAdmissionintake(), "", "", universityModel.getState(), allImages);
+
+            // Add representative
+            representativeService.createRepresentative(universityModel.getRepname(), universityModel.getEmail(), universityModel.getPhoneNumber(),
+                    allImages, universityModel.getUsername(), universityModel.getPassword());
 
             List<UniversityEntity> allUniversities = universityService.getAllUniversities();
             String homeURL = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();

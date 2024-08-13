@@ -28,6 +28,12 @@ public class RepresentativeEntity {
     @Column(name = "profilepic")
     private String profilepic;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
     @ManyToOne
     private AppointmentsEntity appointments;
 }

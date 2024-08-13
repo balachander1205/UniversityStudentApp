@@ -4,6 +4,7 @@ import com.api.university.entity.AppointmentsEntity;
 import com.api.university.entity.RepresentativeEntity;
 import com.api.university.repository.RepresentativeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,5 +21,15 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     @Override
     public List<RepresentativeEntity> getAllRepresentatives() {
         return representativeRepository.getAllRepresentatives();
+    }
+
+    public void createRepresentative(String repname, String email, String phonenumber,
+                                     String profilepic, String username, String password){
+        representativeRepository.createRepresentative(repname, email, phonenumber,
+                profilepic, username, password);
+    }
+
+    public RepresentativeEntity getRepresentativeByUsername( String username){
+        return representativeRepository.getRepresentativeByUsername(username);
     }
 }
