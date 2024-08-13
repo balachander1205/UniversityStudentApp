@@ -28,6 +28,6 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
     public void createRepresentative(@Param("repname") String repname, @Param("email") String email, @Param("phonenumber") String phonenumber,
                                  @Param("profilepic") String profilepic, @Param("username") String username, @Param("password") String password);
 
-    @Query(value = "select a from RepresentativeEntity r where r.username=:username")
+    @Query(value = "select r from RepresentativeEntity r where r.username=:username")
     public RepresentativeEntity getRepresentativeByUsername(@Param("username") String username);
 }
