@@ -10,6 +10,7 @@ import com.api.university.utils.CommonUtils;
 import com.api.university.utils.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.thymeleaf.util.StringUtils;
 import javax.activation.FileTypeMap;
 import javax.annotation.Resource;
 import javax.mail.Multipart;
+import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -236,6 +238,16 @@ public class UniversityController {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
+    }
+
+    @GetMapping(value = "/searchUniversity")
+    @ResponseBody
+    public ResponseEntity searchUniversity(@RequestParam(value = "universityName", defaultValue = "") String universityName,
+                                           @RequestParam(value = "location", defaultValue = "") String location,
+                                           @RequestParam(value = "state", defaultValue = "") String state,
+                                           @RequestParam(value = "country", defaultValue = "") String country){
+        List<UniversityEntity> data = universityService.searchUniversity(universityName, state, location);
+        return ResponseEntity.ok(data);
     }
 
 }

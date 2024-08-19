@@ -44,5 +44,7 @@ public class UniversityServiceImpl implements UniversityService {
         return universityRepository.getUniversitiesByID(id);
     }
 
-    ;
+    public List<UniversityEntity> searchUniversity(String searchText, String state, String location){
+        return universityRepository.searchUniversity(searchText, state, location);
+    }
 }
