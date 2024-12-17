@@ -63,4 +63,10 @@ public class AppointmentController {
         List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsWithMobileNumber(phoneNumber);
         return ResponseEntity.ok(listOfAppointments);
     }
+
+    @PostMapping("/getAppointmentsByRepEmail")
+    public ResponseEntity getAppointmentsByRepEmail(@RequestParam("email") String email){
+        List<AppointmentsEntity> listOfAppointments = appointmentsRepository.getAppointmentsByRepEmail(email);
+        return ResponseEntity.ok(listOfAppointments);
+    }
 }

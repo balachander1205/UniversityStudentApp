@@ -17,4 +17,5 @@ public interface AppointmentsService {
     public List<AppointmentsEntity> getUpcomingAppointments();
     public List<AppointmentsEntity> getAppointmentsByID(String id);
     public List<AppointmentsEntity> getAppointmentsWithMobileNumber(String phoneNumber);
+    public List<AppointmentsEntity> getAppointmentsByRepEmail(String email);
 }

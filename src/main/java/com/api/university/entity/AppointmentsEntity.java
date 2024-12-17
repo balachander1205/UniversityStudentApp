@@ -2,6 +2,8 @@ package com.api.university.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -39,4 +41,9 @@ public class AppointmentsEntity {
 
     @Column(name = "phonenumber")
     private String phonenumber;
+
+//    @OneToOne(optional = false, mappedBy = "email")
+//    @NotFound(action = NotFoundAction.IGNORE)
+////    @JoinColumn(name = "email", referencedColumnName = "repName", insertable = false, updatable = false)
+//    private RepresentativeEntity address;
 }

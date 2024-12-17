@@ -38,4 +38,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
     // getAppointmentsWithMobileNumber
     @Query(value = "select data from AppointmentsEntity data where data.phonenumber=:phoneNumber")
     public List<AppointmentsEntity> getAppointmentsWithMobileNumber(@Param("phoneNumber") String phoneNumber);
+
+    @Query(value = "select a from RepresentativeEntity r, AppointmentsEntity a where r.email = :email and a.repname = r.repname")
+    public List<AppointmentsEntity> getAppointmentsByRepEmail(@Param("email") String email);
 }
