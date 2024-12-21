@@ -28,4 +28,9 @@ public class LeaveServiceImpl implements LeaveService {
     public List<LeavesEntity> getUpcomingLeavesByRepEmail(String repEmail) {
         return leaveRepository.getUpcomingLeavesByRepEmail(repEmail);
     }
+
+    @Override
+    public void deleteLeave(String eventid) {
+        leaveRepository.deleteLeave(eventid);
+    }
 }

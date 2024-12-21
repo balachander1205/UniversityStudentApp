@@ -25,4 +25,9 @@ public interface LeaveRepository extends CrudRepository<LeavesEntity, Long> {
 
     @Query(value = "select l from LeavesEntity l where l.repemail=:repEmail and Date(l.startdate)>=Date(NOW())")
     public List<LeavesEntity> getUpcomingLeavesByRepEmail(@Param("repEmail") String repEmail);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from leaves where eventid=:eventid", nativeQuery = true)
+    public void deleteLeave(@Param("eventid") String eventid);
 }

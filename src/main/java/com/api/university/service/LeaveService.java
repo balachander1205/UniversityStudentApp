@@ -13,4 +13,5 @@ public interface LeaveService {
 
     public List<LeavesEntity> getLeavesByRepEmail(String repEmail);
     public List<LeavesEntity> getUpcomingLeavesByRepEmail(String repEmail);
+    public void deleteLeave(String eventid);
 }
