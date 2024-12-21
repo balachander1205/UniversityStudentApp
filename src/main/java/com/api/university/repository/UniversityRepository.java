@@ -38,6 +38,6 @@ public interface UniversityRepository extends CrudRepository<UniversityEntity, L
     @Query(value = "update db_university.university set password=:password where username=:username" , nativeQuery = true)
     public void resetPassword(@Param("username") String username, @Param("password") String password);
 
-    @Query("SELECT data from UniversityEntity data WHERE data.universityname LIKE %:searchText% OR data.state LIKE %:state%  OR data.state LIKE %:location%")
-    List<UniversityEntity> searchUniversity(@Param("searchText") String searchText, @Param("state") String state,@Param("location") String location);
+    @Query("SELECT data from UniversityEntity data WHERE data.universityname LIKE %:searchText% OR data.state LIKE %:state%  OR data.state LIKE %:location%  OR data.coursetype LIKE %:coursetype% OR data.admissionintake LIKE %:admissionintake%")
+    List<UniversityEntity> searchUniversity(@Param("searchText") String searchText, @Param("state") String state, @Param("location") String location, @Param("coursetype") String coursetype, @Param("admissionintake") String admissionintake);
 }

@@ -44,4 +44,10 @@ public class RepresentativeController {
         return false;
     }
 
+    @PostMapping("/getRepresentativeByEmail")
+    public ResponseEntity getRepresentativeByEmail(@RequestParam("email") String email){
+        RepresentativeEntity data = representativeService.getRepresentativeByEmail(email);
+        return ResponseEntity.ok(data);
+    }
+
 }

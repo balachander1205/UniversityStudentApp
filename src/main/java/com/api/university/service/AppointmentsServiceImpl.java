@@ -50,4 +50,9 @@ public class AppointmentsServiceImpl implements AppointmentsService {
     public List<AppointmentsEntity> getAppointmentsByRepEmail(String email) {
         return appointmentsRepository.getAppointmentsByRepEmail(email);
     }
+
+    @Override
+    public List<AppointmentsEntity> getUpcomingAppointmentsByRepID(String repID) {
+        return appointmentsRepository.getUpcomingAppointmentsByRepID(repID);
+    }
 }

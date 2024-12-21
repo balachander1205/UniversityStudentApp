@@ -15,4 +15,5 @@ public class StudentModel {
     private String location;
     private String email;
     private String feedback;
+    private String passoutyear;
 }

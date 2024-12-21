@@ -34,6 +34,9 @@ public class RepresentativeEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "availability")
+    private String availability;
+
     @ManyToOne
     private AppointmentsEntity appointments;
 }

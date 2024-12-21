@@ -15,11 +15,16 @@ import java.util.List;
 public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
     @Transactional
     @Modifying
-    @Query(value = "insert into students (universityname, studentname, location, studentlocation, phonenumber, email, feedback, createdatetime) " +
-            "values (:universityname, :studentname, :location, :studentlocation, :phonenumber, :email, :feedback, :createdatetime)", nativeQuery = true)
+    @Query(value = "insert into students (universityname, studentname, location, studentlocation, phonenumber, email, feedback, createdatetime, passoutyear) " +
+            "values (:universityname, :studentname, :location, :studentlocation, :phonenumber, :email, :feedback, :createdatetime, :passoutyear)", nativeQuery = true)
     public void insertStudent(@Param("universityname") String universityname, @Param("studentname") String studentname, @Param("location") String location,
                               @Param("studentlocation") String studentlocation, @Param("phonenumber") String phonenumber, @Param("email") String email, @Param("feedback") String feedback,
-                              @Param("createdatetime") Timestamp createdatetime);
+                              @Param("createdatetime") Timestamp createdatetime, @Param("passoutyear") String passoutyear);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update table students set email=:email where phonenumber=:phonenumber", nativeQuery = true)
+    public void updateStudent(@Param("phonenumber") String phonenumber, @Param("email") String email);
 
     @Query(value = "select data from StudentEntity data")
     public List<StudentEntity> getAllStudents();

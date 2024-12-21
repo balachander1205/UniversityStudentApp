@@ -20,7 +20,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
     @Query(value = "insert into appointments (studentname, repname, universityname, location, appointmentdate, appointmentslot, createdatetime, phonenumber) " +
             "values (:studentname, :repname, :universityname, :location, :appointmentdate, :appointmentslot, :createdatetime, :phoneNumber)", nativeQuery = true)
     public void createAppointment(@Param("studentname") String studentname, @Param("repname") String repname, @Param("universityname") String universityname, @Param("location") String location,
-                              @Param("appointmentdate") String appointmentdate, @Param("appointmentslot") String appointmentslot, @Param("createdatetime") Timestamp createdatetime,
+                                  @Param("appointmentdate") String appointmentdate, @Param("appointmentslot") String appointmentslot, @Param("createdatetime") Timestamp createdatetime,
                                   @Param("phoneNumber") String phoneNumber);
 
     @Query(value = "select data from AppointmentsEntity data")
@@ -29,7 +29,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
     @Query(value = "select data from AppointmentsEntity data where data.repname=:repname")
     public List<AppointmentsEntity> getAppointmentsByRepname(@Param("repname") String repname);
 
-    @Query(value = "select data from AppointmentsEntity data where data.appointmentdate>=NOW()")
+    @Query(value = "select data from AppointmentsEntity data where Date(data.appointmentdate)>=Date(NOW())")
     public List<AppointmentsEntity> getUpcomingAppointments();
 
     @Query(value = "select data from AppointmentsEntity data where data.id=:id")
@@ -41,4 +41,7 @@ public interface AppointmentsRepository extends CrudRepository<AppointmentsEntit
 
     @Query(value = "select a from RepresentativeEntity r, AppointmentsEntity a where r.email = :email and a.repname = r.repname")
     public List<AppointmentsEntity> getAppointmentsByRepEmail(@Param("email") String email);
+
+    @Query(value = "select data from AppointmentsEntity data where Date(data.appointmentdate)>=Date(NOW()) and repname=:repID")
+    public List<AppointmentsEntity> getUpcomingAppointmentsByRepID(@Param("repID") String repID);
 }

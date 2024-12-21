@@ -245,8 +245,9 @@ public class UniversityController {
     public ResponseEntity searchUniversity(@RequestParam(value = "universityName", defaultValue = "") String universityName,
                                            @RequestParam(value = "location", defaultValue = "") String location,
                                            @RequestParam(value = "state", defaultValue = "") String state,
-                                           @RequestParam(value = "country", defaultValue = "") String country){
-        List<UniversityEntity> data = universityService.searchUniversity(universityName, state, location);
+                                           @RequestParam(value = "courseType", defaultValue = "") String courseType,
+                                           @RequestParam(value = "admissionInTake", defaultValue = "") String admissionInTake){
+        List<UniversityEntity> data = universityService.searchUniversity(universityName, state, location, courseType, admissionInTake);
         return ResponseEntity.ok(data);
     }
 

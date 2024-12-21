@@ -26,10 +26,22 @@ public class StudentController {
     @PostMapping("/createStudent")
     public ResponseEntity createStudent(@RequestBody StudentModel studentModel) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        studentRepository.insertStudent(studentModel.getUniversityname(), studentModel.getStudentname(),
-                studentModel.getLocation(), studentModel.getStudentlocation(),
-                studentModel.getPhonenumber(), studentModel.getEmail(), studentModel.getFeedback(), timestamp);
-        return ResponseEntity.ok("OK");
+        List<StudentEntity> isStudentExists = studentRepository.getStudentDetailsByMobileNumber(studentModel.getPhonenumber());
+        if(isStudentExists.size()==0){
+            studentRepository.insertStudent(studentModel.getUniversityname(), studentModel.getStudentname(),
+                    studentModel.getLocation(), studentModel.getStudentlocation(),
+                    studentModel.getPhonenumber(), studentModel.getEmail(), studentModel.getFeedback(), timestamp, studentModel.getPassoutyear());
+            return ResponseEntity.ok("OK");
+        }else{
+            return ResponseEntity.ok("Student with mobile number already exists...");
+        }
+    }
+
+    @PutMapping("/updateStudent")
+    public ResponseEntity updateStudent(@RequestParam("email") String email, @RequestParam("phoneNumber") String phoneNumber) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        studentRepository.updateStudent(phoneNumber, email);
+        return ResponseEntity.ok("Student update successful...");
     }
 
     @GetMapping("/studentDetails")

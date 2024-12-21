@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class AppointmentModel {
     private String studentName;
-    private String repName;
+    private String repEmail;
     private String universityName;
     private String location;
     private String appointmentDate;

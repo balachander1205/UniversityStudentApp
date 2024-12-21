@@ -16,9 +16,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void insertStudent(String universityname, String studentname, String location,
-                              String studentlocation, String phonenumber, String email, String feedback, Timestamp createdatetime) {
+                              String studentlocation, String phonenumber, String email, String feedback, Timestamp createdatetime, String passoutyear) {
         studentRepository.insertStudent(universityname, studentname, location,
-                studentlocation, phonenumber, email, feedback, createdatetime);
+                studentlocation, phonenumber, email, feedback, createdatetime, passoutyear);
     }
 
     public List<StudentEntity> getAllStudents(){
@@ -39,5 +39,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int updateFeedback(long id, String feedback) {
         return studentRepository.updateFeedback(id, feedback);
+    }
+
+    @Override
+    public void updateStudent(String phonenumber, String email) {
+        studentRepository.updateStudent(phonenumber, email);
     }
 }

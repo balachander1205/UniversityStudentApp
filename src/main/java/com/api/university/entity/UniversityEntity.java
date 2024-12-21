@@ -45,4 +45,10 @@ public class UniversityEntity
 
     @Column(name = "images")
     private String images;
+
+    @Column(name = "coursetype")
+    private String coursetype;
+
+    @Column(name = "isrecommended")
+    private String isrecommended;
 }

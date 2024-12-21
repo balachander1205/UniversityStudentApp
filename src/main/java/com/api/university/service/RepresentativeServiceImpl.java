@@ -32,4 +32,9 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     public RepresentativeEntity getRepresentativeByUsername( String username){
         return representativeRepository.getRepresentativeByUsername(username);
     }
+
+    @Override
+    public RepresentativeEntity getRepresentativeByEmail(String email) {
+        return representativeRepository.getRepresentativeByEmail(email);
+    }
 }

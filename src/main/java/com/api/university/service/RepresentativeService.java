@@ -12,4 +12,5 @@ public interface RepresentativeService {
     public void createRepresentative(String repname, String email, String phonenumber,
                                      String profilepic, String username, String password);
     public RepresentativeEntity getRepresentativeByUsername( String username);
+    public RepresentativeEntity getRepresentativeByEmail(String email);
 }

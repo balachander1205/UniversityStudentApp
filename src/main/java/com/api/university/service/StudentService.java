@@ -8,12 +8,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface StudentService {
-    public void insertStudent(String universityname,String studentname, String location,
-                                 String studentlocation, String phonenumber,String email, String feedback,
-                                 Timestamp createdatetime);
+    public void insertStudent(String universityname, String studentname, String location,
+                              String studentlocation, String phonenumber, String email, String feedback,
+                              Timestamp createdatetime, String passoutyear);
+
     public List<StudentEntity> getAllStudents();
+
     public List<StudentEntity> getTotalStudents();
+
     public List<StudentEntity> getActiveStudents();
+
     public List<StudentEntity> getStudentDetailsByMobileNumber(String phonenumber);
+
     public int updateFeedback(long id, String feedback);
+
+    public void updateStudent(String phonenumber, String email);
 }
