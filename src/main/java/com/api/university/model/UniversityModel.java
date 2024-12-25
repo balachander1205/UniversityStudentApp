@@ -20,4 +20,7 @@ public class UniversityModel {
     private String email;
     private String state;
     private List<String> images;
+    private String course;
+    private String isRecommended;
+    private String representatives;
 }

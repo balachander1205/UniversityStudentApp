@@ -37,4 +37,9 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     public RepresentativeEntity getRepresentativeByEmail(String email) {
         return representativeRepository.getRepresentativeByEmail(email);
     }
+
+    @Override
+    public List<RepresentativeEntity> getRepresentativeByUniversityId(String universityID) {
+        return representativeRepository.getRepresentativeByUniversityId(universityID);
+    }
 }

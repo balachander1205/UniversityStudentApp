@@ -2,7 +2,6 @@ package com.api.university.repository;
 
 import com.api.university.entity.AppointmentsEntity;
 import com.api.university.entity.RepresentativeEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,4 +32,7 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
 
     @Query(value = "select r from RepresentativeEntity r where r.email=:email")
     public RepresentativeEntity getRepresentativeByEmail(@Param("email") String email);
+
+    @Query(value = "select r from RepresentativeEntity r where r.universityid=:universityid")
+    public List<RepresentativeEntity> getRepresentativeByUniversityId(@Param("universityid") String universityid);
 }

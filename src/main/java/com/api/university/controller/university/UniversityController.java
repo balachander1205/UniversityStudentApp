@@ -1,7 +1,7 @@
 package com.api.university.controller.university;
 
+import com.api.university.entity.RepresentativeEntity;
 import com.api.university.entity.UniversityEntity;
-import com.api.university.model.RepresentativesResponseModel;
 import com.api.university.model.UniversityModel;
 import com.api.university.model.UniversityResponseModel;
 import com.api.university.repository.UniversityRepository;
@@ -10,13 +10,11 @@ import com.api.university.utils.CommonUtils;
 import com.api.university.utils.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.thymeleaf.util.StringUtils;
 
-import javax.activation.FileTypeMap;
-import javax.annotation.Resource;
-import javax.mail.Multipart;
-import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @Controller
@@ -63,6 +56,11 @@ public class UniversityController {
         universityResponseModel.setUniversities(allUniversities);
         universityResponseModel.getUniversities().stream().forEach(data-> {
             List<String> imagesList = new ArrayList<>();
+            // Get representatives of university
+            if(data.getUniversityid()!=null){
+                List<RepresentativeEntity> reps = representativeService.getRepresentativeByUniversityId(data.getUniversityid());
+                data.setRepresentativeEntities(reps);
+            }
             if(data.getImages()!=null) {
                 if (data.getImages() != null && data.getImages().length() > 0 && data.getImages().contains(",")) {
                     String[] images = data.getImages().split(",");
@@ -113,6 +111,9 @@ public class UniversityController {
         try {
             List<String> fileNames = new ArrayList<>();
 
+            long currentTS = System.currentTimeMillis();
+            String universityID = String.valueOf(currentTS);
+
             String allImages = "";
             // Read uploaded files
             if(files.length>0) {
@@ -136,9 +137,13 @@ public class UniversityController {
             universityModel = objectMapper.readValue(university, UniversityModel.class);
             log.info("universityModel={}", universityModel);
             // Add university
+//            universityService.insertUniversity(universityModel.getUniversityname(), universityModel.getDescription(),
+//                    universityModel.getLocation(), universityModel.getRepname(), universityModel.getRepname(),
+//                    universityModel.getAdmissionintake(), "", "", universityModel.getState(), allImages);
             universityService.insertUniversity(universityModel.getUniversityname(), universityModel.getDescription(),
                     universityModel.getLocation(), universityModel.getRepname(), universityModel.getRepname(),
-                    universityModel.getAdmissionintake(), "", "", universityModel.getState(), allImages);
+                    universityModel.getAdmissionintake(), universityModel.getUsername(), universityModel.getPassword(), universityModel.getState(), "",
+                    universityModel.getCourse(), universityModel.getIsRecommended(), universityID);
 
             // Add representative
             representativeService.createRepresentative(universityModel.getRepname(), universityModel.getEmail(), universityModel.getPhoneNumber(),
@@ -193,12 +198,12 @@ public class UniversityController {
 
     @PostMapping(value = "/getUniversitiesByID", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getUniversitiesByID(@RequestParam("id") String id){
-        List<UniversityEntity> allUniversities = universityService.getUniversitiesByID(Integer.valueOf(id));
+    public String getUniversitiesByID(@RequestParam("universityId") String id){
+        List<UniversityEntity> allUniversities = universityService.getUniversitiesByID(id);
 
-        JSONArray universities = new JSONArray();
+        JSONArray representatives = new JSONArray();
+        JSONObject rep = new JSONObject();
         for(UniversityEntity university : allUniversities){
-            JSONObject rep = new JSONObject();
             rep.put("repName", university.getRepname());
             rep.put("id", university.getId());
             rep.put("description", university.getDescription());
@@ -207,19 +212,34 @@ public class UniversityController {
             rep.put("universityName", university.getUniversityname());
             rep.put("admissionIntake", university.getAdmissionintake());
             rep.put("images",university.getImages());
-            universities.put(rep);
+            rep.put("universityid",university.getUniversityid());
+            List<RepresentativeEntity> reps = representativeService.getRepresentativeByUniversityId(university.getUniversityid());
+            if (reps.size() > 0) {
+                reps.forEach(row -> {
+                    JSONObject repObj = new JSONObject();
+                    repObj.put("repname", row.getRepname());
+                    repObj.put("email", row.getEmail());
+                    repObj.put("phonenumber", row.getPhonenumber());
+                    repObj.put("universityid", row.getUniversityid());
+                    repObj.put("availability", row.getAvailability());
+                    representatives.put(repObj);
+                });
+            }
+            rep.put("representatives", representatives);
         }
-        return universities.toString();
+        return rep.toString();
     }
 
     @PostMapping(value = "/getRepresentatives", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String getRepresentatives(){
-        List<UniversityEntity> allUniversities = universityService.getAllUniversities();
+        List<RepresentativeEntity> allRepresentatives = representativeService.getAllRepresentatives();
         JSONArray allReps = new JSONArray();
-        for(UniversityEntity university : allUniversities){
+        for(RepresentativeEntity university : allRepresentatives){
             JSONObject rep = new JSONObject();
             rep.put("repname", university.getRepname());
+            rep.put("email", university.getEmail());
+            rep.put("phonenumber", university.getPhonenumber());
             rep.put("image", "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg");
             allReps.put(rep);
         }

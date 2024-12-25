@@ -37,6 +37,9 @@ public class RepresentativeEntity {
     @Column(name = "availability")
     private String availability;
 
+    @Column(name = "universityid")
+    private String universityid;
+
     @ManyToOne
     private AppointmentsEntity appointments;
 }

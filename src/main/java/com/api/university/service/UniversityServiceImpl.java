@@ -20,9 +20,11 @@ public class UniversityServiceImpl implements UniversityService {
 
     public void insertUniversity(String universityname, String description, String location,
                                  String repname, String position, String admissionintake,
-                                 String username, String password, String state, String images) {
+                                 String username, String password, String state, String images,
+                                 String coursetype, String isrecommended, String universityid) {
         universityRepository.insertUniversity(universityname, description, location,
-                repname, position, admissionintake, username, password, state, images);
+                repname, position, admissionintake, username, password, state, images,
+                coursetype, isrecommended, universityid);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public List<UniversityEntity> getUniversitiesByID(int id) {
+    public List<UniversityEntity> getUniversitiesByID(String id) {
         return universityRepository.getUniversitiesByID(id);
     }
 

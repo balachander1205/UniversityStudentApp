@@ -1,9 +1,11 @@
 package com.api.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "university")
@@ -51,4 +53,11 @@ public class UniversityEntity
 
     @Column(name = "isrecommended")
     private String isrecommended;
+
+    @Column(name = "universityid")
+    private String universityid;
+
+    @Transient
+    @JsonProperty("representatives")
+    List<RepresentativeEntity> representativeEntities;
 }
