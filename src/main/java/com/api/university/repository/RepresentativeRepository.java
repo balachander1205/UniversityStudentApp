@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface RepresentativeRepository extends CrudRepository<RepresentativeEntity, Long> {
 
-    @Query(value = "select a from RepresentativeEntity r, AppointmentsEntity a where r.email=:email and r.repname = a.repname")
+    @Query(value = "select a from RepresentativeEntity r, AppointmentsEntity a where r.email=:email and r.email = a.repname")
     public List<AppointmentsEntity> getRepresentativeAppointmentsByEmailID(@Param("email") String email);
 
     @Query(value = "select r from RepresentativeEntity r")
