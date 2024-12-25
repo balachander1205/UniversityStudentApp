@@ -49,19 +49,19 @@ public class UniversityController {
     CommonUtils commonUtils;
 
     @PostMapping("/getAllUniversities")
-    public ResponseEntity getAllUniversities(){
+    public ResponseEntity getAllUniversities() {
         List<UniversityEntity> allUniversities = universityService.getAllUniversities();
         String homeURL = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
         UniversityResponseModel universityResponseModel = new UniversityResponseModel();
         universityResponseModel.setUniversities(allUniversities);
-        universityResponseModel.getUniversities().stream().forEach(data-> {
+        universityResponseModel.getUniversities().stream().forEach(data -> {
             List<String> imagesList = new ArrayList<>();
             // Get representatives of university
-            if(data.getUniversityid()!=null){
+            if (data.getUniversityid() != null) {
                 List<RepresentativeEntity> reps = representativeService.getRepresentativeByUniversityId(data.getUniversityid());
                 data.setRepresentativeEntities(reps);
             }
-            if(data.getImages()!=null) {
+            if (data.getImages() != null) {
                 if (data.getImages() != null && data.getImages().length() > 0 && data.getImages().contains(",")) {
                     String[] images = data.getImages().split(",");
                     Arrays.stream(images).forEach(img -> {
@@ -77,14 +77,7 @@ public class UniversityController {
                 data.setImages(StringUtils.join(imagesList, ','));
             }
         });
-        Map arrayList = new HashMap();
-        allUniversities.forEach((entity)->{
-            arrayList.put(entity.getRepname(), entity.getRepname());
-        });
-        log.info("reps={}",arrayList);
-        //List<String> representatives = universityService.getAllUniversities().stream().map(UniversityEntity :: getRepname).collect(Collectors.toList());
-        universityResponseModel.setRepresentatives(arrayList);
-        log.info("universityResponseModel={}",universityResponseModel);
+        log.info("universityResponseModel={}", universityResponseModel);
         return ResponseEntity.ok(universityResponseModel);
     }
 
@@ -180,18 +173,22 @@ public class UniversityController {
         return ResponseEntity.ok(null);
     }
 
-    @PostMapping("/getUniversitiesByRepName")
-    public ResponseEntity getUniversitiesByRepName(@RequestParam("repname") String repName){
-        List<UniversityEntity> allUniversities = universityService.getUniversitiesByRepName(repName);
+    @PostMapping("/getUniversitiesByRepEmail")
+    public ResponseEntity getUniversitiesByRepEmail(@RequestParam("repEmail") String email){
+        RepresentativeEntity rep = representativeService.getRepresentativeByEmail(email);
         UniversityResponseModel universityResponseModel = new UniversityResponseModel();
-        universityResponseModel.setUniversities(allUniversities);
-        Map arrayList = new HashMap();
-        allUniversities.forEach((entity)->{
-            arrayList.put(entity.getRepname(), entity.getRepname());
-        });
-        log.info("reps={}",arrayList);
-        //List<String> representatives = universityService.getAllUniversities().stream().map(UniversityEntity :: getRepname).collect(Collectors.toList());
-        universityResponseModel.setRepresentatives(arrayList);
+
+        if (rep != null) {
+            String universityID = rep.getUniversityid();
+            List<UniversityEntity> allUniversities = universityService.getUniversitiesByID(universityID);
+            List<RepresentativeEntity> reps = representativeService.getRepresentativeByUniversityId(universityID);
+            if (reps.size() > 0) {
+                allUniversities.forEach(universityEntity -> {
+                    universityEntity.setRepresentativeEntities(reps);
+                });
+            }
+            universityResponseModel.setUniversities(allUniversities);
+        }
         log.info("universityResponseModel={}",universityResponseModel);
         return ResponseEntity.ok(universityResponseModel);
     }
