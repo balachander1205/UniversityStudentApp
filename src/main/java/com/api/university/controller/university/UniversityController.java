@@ -219,6 +219,7 @@ public class UniversityController {
                     repObj.put("phonenumber", row.getPhonenumber());
                     repObj.put("universityid", row.getUniversityid());
                     repObj.put("availability", row.getAvailability());
+                    repObj.put("image", row.getProfilepic());
                     representatives.put(repObj);
                 });
             }
