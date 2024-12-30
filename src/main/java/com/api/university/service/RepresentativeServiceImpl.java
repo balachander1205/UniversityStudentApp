@@ -42,4 +42,9 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     public List<RepresentativeEntity> getRepresentativeByUniversityId(String universityID) {
         return representativeRepository.getRepresentativeByUniversityId(universityID);
     }
+
+    @Override
+    public int resetPassword(String username, String password) {
+        return representativeRepository.resetPassword(username, password);
+    }
 }

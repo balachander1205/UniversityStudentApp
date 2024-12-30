@@ -38,6 +38,14 @@ public class RepresentativeController {
         RepresentativeEntity data = representativeService.getRepresentativeByUsername(loginModel.getUsername());
         try {
             if (data != null) {
+                if (!loginModel.getUsername().equals(data.getUsername())){
+                    loginResponseModel.setStatus(false);
+                    loginResponseModel.setMessage("User does not exists.");
+                }
+                if (loginModel.getUsername().equals(data.getUsername()) && !loginModel.getPassword().equals(data.getPassword())) {
+                    loginResponseModel.setStatus(false);
+                    loginResponseModel.setMessage("Invalid Password.");
+                }
                 if (loginModel.getUsername().equals(data.getUsername()) && loginModel.getPassword().equals(data.getPassword())) {
                     loginResponseModel.setStatus(true);
                     loginResponseModel.setMessage("Authentication Successful.");
@@ -52,6 +60,25 @@ public class RepresentativeController {
         }catch (Exception e){
             loginResponseModel.setStatus(false);
             loginResponseModel.setMessage("Internal Server Error. Authentication Failed.");
+        }
+        return ResponseEntity.ok(loginResponseModel);
+    }
+
+    @PutMapping("/resetRepPassword")
+    @ResponseBody
+    public ResponseEntity resetRepPassword(@RequestBody LoginModel loginModel){
+        RepresentativeEntity data = representativeService.getRepresentativeByUsername(loginModel.getUsername());
+        LoginResponseModel loginResponseModel = new LoginResponseModel();
+        if(data!=null && data.getUsername().equals(loginModel.getUsername())){
+            representativeService.resetPassword(loginModel.getUsername(), loginModel.getPassword());
+            loginResponseModel.setStatus(true);
+            loginResponseModel.setMessage("Password reset successful.");
+        }if((data==null) || (data!=null && !data.getUsername().equals(loginModel.getUsername()))){
+            loginResponseModel.setStatus(false);
+            loginResponseModel.setMessage("User does not exists.");
+        }else{
+            loginResponseModel.setStatus(false);
+            loginResponseModel.setMessage("Password reset failed.");
         }
         return ResponseEntity.ok(loginResponseModel);
     }

@@ -35,4 +35,9 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
 
     @Query(value = "select r from RepresentativeEntity r where r.universityid=:universityid")
     public List<RepresentativeEntity> getRepresentativeByUniversityId(@Param("universityid") String universityid);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update RepresentativeEntity r set r.password=:password where r.username=:username")
+    public int resetPassword(@Param("username") String username, @Param("password") String password);
 }
