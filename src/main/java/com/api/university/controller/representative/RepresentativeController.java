@@ -73,7 +73,7 @@ public class RepresentativeController {
             representativeService.resetPassword(loginModel.getUsername(), loginModel.getPassword());
             loginResponseModel.setStatus(true);
             loginResponseModel.setMessage("Password reset successful.");
-        }if((data==null) || (data!=null && !data.getUsername().equals(loginModel.getUsername()))){
+        }else if((data==null) || (data!=null && !data.getUsername().equals(loginModel.getUsername()))){
             loginResponseModel.setStatus(false);
             loginResponseModel.setMessage("User does not exists.");
         }else{
