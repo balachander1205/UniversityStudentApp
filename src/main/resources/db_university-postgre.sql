@@ -47,6 +47,30 @@ CREATE TABLE university (
   images varchar(5) DEFAULT NULL
 );
 
+-- start of student preference table creation --
+CREATE TABLE std_preferences (
+  id INTEGER NOT NULL,
+  studentname varchar(100) DEFAULT NULL,
+  phonenumber varchar(20) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  country varchar(500) DEFAULT NULL,
+  state varchar(500) DEFAULT NULL,
+  yearofplan varchar(500) DEFAULT NULL,
+  coursetype varchar(500) DEFAULT NULL,
+  createdatetime timestamp NULL DEFAULT NULL
+);
+CREATE SEQUENCE IF NOT EXISTS std_preferences_id_seq;
+
+SELECT SETVAL('std_preferences_id_seq', (
+  SELECT max(id) FROM std_preferences)
+);
+
+ALTER TABLE std_preferences
+ALTER COLUMN id
+SET DEFAULT nextval('std_preferences_id_seq'::regclass);
+
+ALTER SEQUENCE std_preferences_id_seq OWNED BY std_preferences.id;
+-- End of student preference table creation --
 CREATE TABLE users (
   id bigint NOT NULL,
   createddatetime timestamp DEFAULT NULL,
