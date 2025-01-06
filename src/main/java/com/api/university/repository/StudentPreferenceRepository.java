@@ -14,10 +14,10 @@ import java.sql.Timestamp;
 public interface StudentPreferenceRepository extends CrudRepository<StudentPreferencesEntity, Long> {
     @Transactional
     @Modifying
-    @Query(value = "insert into std_preferences (studentname, phonenumber, email, country, state, createdatetime, yearofplan, coursetype) " +
-            "values (:studentname, :phonenumber, :email, :country, :state, :createdatetime, :yearofplan, :coursetype)", nativeQuery = true)
+    @Query(value = "insert into std_preferences (studentname, phonenumber, email, country, state, createdatetime, yearofplan, coursetype, intaketype) " +
+            "values (:studentname, :phonenumber, :email, :country, :state, :createdatetime, :yearofplan, :coursetype, :intaketype)", nativeQuery = true)
     public void savePreference(@Param("studentname") String studentname, @Param("phonenumber") String phonenumber,
                                @Param("email") String email, @Param("country") String country, @Param("state") String state,
                               @Param("createdatetime") Timestamp createdatetime, @Param("yearofplan") String yearofplan,
-                               @Param("coursetype") String coursetype);
+                               @Param("coursetype") String coursetype,@Param("intaketype") String intaketype);
 }

@@ -13,4 +13,5 @@ public class StudentPreferenceModel {
     private String state;
     private String courseType;
     private String yearOfPlan;
+    private String inTakeType;
 }

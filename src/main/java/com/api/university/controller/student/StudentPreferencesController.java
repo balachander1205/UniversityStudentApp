@@ -27,7 +27,7 @@ public class StudentPreferencesController {
         SavePrefResponseModel savePrefResponseModel = new SavePrefResponseModel();
         try {
             studentPreferenceService.savePreference(studentModel.getStudentName(), studentModel.getPhoneNumber(), studentModel.getEmail(),
-                    studentModel.getCountry(), studentModel.getState(), timestamp, studentModel.getYearOfPlan(), studentModel.getCourseType());
+                    studentModel.getCountry(), studentModel.getState(), timestamp, studentModel.getYearOfPlan(), studentModel.getCourseType(), studentModel.getInTakeType());
             savePrefResponseModel.setMessage("Student preferences saved successfully.");
             savePrefResponseModel.setStatus(200);
         }catch (Exception e){

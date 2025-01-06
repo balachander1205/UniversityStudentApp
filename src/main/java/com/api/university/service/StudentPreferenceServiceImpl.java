@@ -13,7 +13,8 @@ public class StudentPreferenceServiceImpl implements StudentPreferenceService {
     StudentPreferenceRepository studentPreferenceRepository;
 
     @Override
-    public void savePreference(String studentname, String phonenumber, String email, String country, String state, Timestamp createdatetime, String yearofplan, String coursetype) {
-        studentPreferenceRepository.savePreference(studentname, phonenumber, email, country, state, createdatetime, yearofplan, coursetype);
+    public void savePreference(String studentname, String phonenumber, String email, String country, String state, Timestamp createdatetime,
+                               String yearofplan, String coursetype, String inTaketype) {
+        studentPreferenceRepository.savePreference(studentname, phonenumber, email, country, state, createdatetime, yearofplan, coursetype, inTaketype);
     }
 }
