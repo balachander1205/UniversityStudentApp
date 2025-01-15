@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentService {
     public void insertStudent(String universityname, String studentname, String location,
                               String studentlocation, String phonenumber, String email, String feedback,
-                              Timestamp createdatetime, String passoutyear);
+                              Timestamp createdatetime,String profilepic, String passoutyear);
 
     public List<StudentEntity> getAllStudents();
 

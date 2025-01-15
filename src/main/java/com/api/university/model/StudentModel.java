@@ -16,4 +16,5 @@ public class StudentModel {
     private String email;
     private String feedback;
     private String passoutyear;
+    private String profilepic;
 }

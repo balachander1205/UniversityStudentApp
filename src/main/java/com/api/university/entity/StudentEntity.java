@@ -32,4 +32,6 @@ public class StudentEntity {
     private String activestatus;
     @Column(name = "passoutyear")
     private String passoutyear;
+    @Column(name = "profilepic")
+    private String profilepic;
 }

@@ -3,6 +3,8 @@ package com.api.university.controller.student;
 import com.api.university.entity.StudentEntity;
 import com.api.university.model.StudentModel;
 import com.api.university.repository.StudentRepository;
+import com.api.university.utils.ImageUploadUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,19 +20,28 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api")
+@Slf4j
 public class StudentController {
 
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    ImageUploadUtils imageUploadUtils;
     @PostMapping("/createStudent")
     public ResponseEntity createStudent(@RequestBody StudentModel studentModel) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         List<StudentEntity> isStudentExists = studentRepository.getStudentDetailsByMobileNumber(studentModel.getPhonenumber());
         if(isStudentExists.size()==0){
+            String imageURL = "https://cdn-icons-png.flaticon.com/512/4042/4042171.png";
+            try{
+                imageURL = imageUploadUtils.uploadImageToImgBB(studentModel.getProfilepic());
+            }catch (Exception e){
+                log.info("Xception in image upload={}",e);
+            }
             studentRepository.insertStudent(studentModel.getUniversityname(), studentModel.getStudentname(),
                     studentModel.getLocation(), studentModel.getStudentlocation(),
-                    studentModel.getPhonenumber(), studentModel.getEmail(), studentModel.getFeedback(), timestamp, studentModel.getPassoutyear());
+                    studentModel.getPhonenumber(), studentModel.getEmail(), studentModel.getFeedback(), timestamp, imageURL, studentModel.getPassoutyear());
             return ResponseEntity.ok("OK");
         }else{
             return ResponseEntity.ok("Student with mobile number already exists...");

@@ -16,23 +16,25 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void insertStudent(String universityname, String studentname, String location,
-                              String studentlocation, String phonenumber, String email, String feedback, Timestamp createdatetime, String passoutyear) {
+                              String studentlocation, String phonenumber, String email, String feedback, Timestamp createdatetime, String profilepic,
+                              String passoutyear) {
         studentRepository.insertStudent(universityname, studentname, location,
-                studentlocation, phonenumber, email, feedback, createdatetime, passoutyear);
+                studentlocation, phonenumber, email, feedback, createdatetime, profilepic, passoutyear);
     }
 
-    public List<StudentEntity> getAllStudents(){
+    public List<StudentEntity> getAllStudents() {
         return studentRepository.getAllStudents();
     }
 
-    public List<StudentEntity> getTotalStudents(){
+    public List<StudentEntity> getTotalStudents() {
         return studentRepository.getTotalStudents();
     }
-    public List<StudentEntity> getActiveStudents(){
+
+    public List<StudentEntity> getActiveStudents() {
         return studentRepository.getActiveStudents();
     }
 
-    public List<StudentEntity> getStudentDetailsByMobileNumber(String phonenumber){
+    public List<StudentEntity> getStudentDetailsByMobileNumber(String phonenumber) {
         return studentRepository.getStudentDetailsByMobileNumber(phonenumber);
     }
 
