@@ -42,9 +42,9 @@ public class StudentController {
             studentRepository.insertStudent(studentModel.getUniversityname(), studentModel.getStudentname(),
                     studentModel.getLocation(), studentModel.getStudentlocation(),
                     studentModel.getPhonenumber(), studentModel.getEmail(), studentModel.getFeedback(), timestamp, imageURL, studentModel.getPassoutyear());
-            return ResponseEntity.ok("OK");
+            return ResponseEntity.ok("Student created successfully.");
         }else{
-            return ResponseEntity.ok("Student with mobile number already exists...");
+            return ResponseEntity.ok("Student with mobile number already exists.");
         }
     }
 
