@@ -35,7 +35,9 @@ public class RepresentativeController {
     @ResponseBody
     public ResponseEntity authenticateRep(@RequestBody LoginModel loginModel){
         LoginResponseModel loginResponseModel = new LoginResponseModel();
-        RepresentativeEntity data = representativeService.getRepresentativeByUsername(loginModel.getUsername());
+        System.out.println(loginModel.getUsername()+" Password="+loginModel.getPassword());
+        RepresentativeEntity data = representativeService.getRepresentativeByUsernameAndPassword(loginModel.getUsername(), loginModel.getPassword());
+        System.out.println(data);
         try {
             if (data != null) {
                 if (!loginModel.getUsername().equals(data.getUsername())){
@@ -67,13 +69,13 @@ public class RepresentativeController {
     @PutMapping("/resetRepPassword")
     @ResponseBody
     public ResponseEntity resetRepPassword(@RequestBody LoginModel loginModel){
-        RepresentativeEntity data = representativeService.getRepresentativeByUsername(loginModel.getUsername());
+        List<RepresentativeEntity> data = representativeService.getRepresentativeByUsername(loginModel.getUsername());
         LoginResponseModel loginResponseModel = new LoginResponseModel();
-        if(data!=null && data.getUsername().equals(loginModel.getUsername())){
+        if((data!=null && data.size()>0 )&& data.get(0).getUsername().equals(loginModel.getUsername())){
             representativeService.resetPassword(loginModel.getUsername(), loginModel.getPassword());
             loginResponseModel.setStatus(true);
             loginResponseModel.setMessage("Password reset successful.");
-        }else if((data==null) || (data!=null && !data.getUsername().equals(loginModel.getUsername()))){
+        }else if((data.size()==0)){
             loginResponseModel.setStatus(false);
             loginResponseModel.setMessage("User does not exists.");
         }else{

@@ -27,8 +27,8 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
     public void createRepresentative(@Param("repname") String repname, @Param("email") String email, @Param("phonenumber") String phonenumber,
                                  @Param("profilepic") String profilepic, @Param("username") String username, @Param("password") String password);
 
-    @Query(value = "select r from RepresentativeEntity r where r.username=:username")
-    public RepresentativeEntity getRepresentativeByUsername(@Param("username") String username);
+    @Query(value = "select * from representative r where r.username=:username and r.password=:password limit 1", nativeQuery = true)
+    public RepresentativeEntity getRepresentativeByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     @Query(value = "select r from RepresentativeEntity r where r.email=:email")
     public RepresentativeEntity getRepresentativeByEmail(@Param("email") String email);
@@ -40,4 +40,8 @@ public interface RepresentativeRepository extends CrudRepository<RepresentativeE
     @Modifying
     @Query(value = "update RepresentativeEntity r set r.password=:password where r.username=:username")
     public int resetPassword(@Param("username") String username, @Param("password") String password);
+
+    @Query(value = "select r from RepresentativeEntity r where r.username=:username")
+    public List<RepresentativeEntity> getRepresentativeByUsername(@Param("username") String username);
+
 }

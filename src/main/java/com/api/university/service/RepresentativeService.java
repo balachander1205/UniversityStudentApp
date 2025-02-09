@@ -11,8 +11,9 @@ public interface RepresentativeService {
     public List<RepresentativeEntity> getAllRepresentatives();
     public void createRepresentative(String repname, String email, String phonenumber,
                                      String profilepic, String username, String password);
-    public RepresentativeEntity getRepresentativeByUsername( String username);
+    public RepresentativeEntity getRepresentativeByUsernameAndPassword( String username, String password);
     public RepresentativeEntity getRepresentativeByEmail(String email);
     public List<RepresentativeEntity> getRepresentativeByUniversityId(String universityID);
     public int resetPassword(String username, String password);
+    public List<RepresentativeEntity> getRepresentativeByUsername( String username);
 }

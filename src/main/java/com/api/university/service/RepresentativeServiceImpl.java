@@ -29,8 +29,8 @@ public class RepresentativeServiceImpl implements RepresentativeService{
                 profilepic, username, password);
     }
 
-    public RepresentativeEntity getRepresentativeByUsername( String username){
-        return representativeRepository.getRepresentativeByUsername(username);
+    public RepresentativeEntity getRepresentativeByUsernameAndPassword( String username, String password){
+        return representativeRepository.getRepresentativeByUsernameAndPassword(username, password);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     @Override
     public int resetPassword(String username, String password) {
         return representativeRepository.resetPassword(username, password);
+    }
+
+    @Override
+    public List<RepresentativeEntity> getRepresentativeByUsername(String username) {
+        return representativeRepository.getRepresentativeByUsername(username);
     }
 }
